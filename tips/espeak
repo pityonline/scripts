@@ -1,0 +1,7 @@
+### 2011.3.15 ###
+
+espeak 错误提示
+bt_audio_service_open: connect() failed: Connection refused (111)
+
+It has nothing to do with the build - uninstall that package and the messages go away, re-install and they return.
+删除 bluez-alsa 包即可消除错误提示。

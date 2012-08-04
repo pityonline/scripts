@@ -1,0 +1,5 @@
+# 分割 ape 的命令
+
+shntool split -t "%n.%p-%t" -f *.cue -o wav *.ape
+
+# n 是歌曲序号，p 是艺术家，t 是标题。cue 是分割依据，wav 是输出格式，ape 是无损文件。

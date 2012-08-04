@@ -1,0 +1,63 @@
+### 2011-3-21 ###
+
+git log 命令选项
+git log 默认显示提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间，最后缩进一个段落显示提交说明，最新的 log 排在最前面。
+git log `-p` 选项展开显示每次提交的内容差异，用 `-2` 则仅显示最近的两次更新。
+git log `--stat` 仅显示简要的增改行数统计。
+git log --pretty=oneline 将每次提交的 SHA-1 校验和和提交说明放在一行显示;另外还有 `short`，`full` 和 `fuller` 可以用.
+git log --pretty=format:"%h - %an, %ar : %s" 表示按格式输出 log，格式为：简短 SHA-1 值 - 作者名字，提交日期 : 提交说明。
+git log --pretty=format:"%h - %an, %ar : %s" --graph 带图形输出。
+
+### 2011-3-21 ###
+
+取消对某文件的跟踪使用 git rm --cached file，如果直接使用 git rm file 会把该文件取消跟踪并且从当前目录中删除！
+
+### 2011-3-19 ###
+
+当出现以下提示时：
+
+# git status
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 1 different commit(s) each, respectively.
+
+是因为某本地文件未正确 add 或 commit，与服务器上的版本不符。解决方法：
+
+git add file
+git commit -a -m 'add file'
+git pull --rebase
+git push
+
+如果提示没什么错误，说明已解决冲突。
+如果不行，尝试：
+
+git pull origin master
+git push
+
+意为先将远程仓库同步至本地仓库，再由本地仓库向远程提交。（是这样吗？）
+
+### 2011-3-19 ###
+
+用 gitstats 生成某仓库状态及记录统计图表
+
+gitstats name_of_repo new_dir
+
+该命令将 name_of_repo 的状态信息生成至 new_dir 中，可以网页内访问 ./new_dir/index.html 来查看。
+
+### 2011-3-11 ###
+
+核弹级选项: filter-branch
+
+如果你想用脚本的方式修改大量的提交，还有一个重写历史的选项可以用——例如，全局性地修改电子邮件地址或者将一个文件从所有提交中删除。这个命令是filter-branch，这个会大面积地修改你的历史，所以你很有可能不该去用它，除非你的项目尚未公开，没有其他人在你准备修改的提交的基础上工作。尽管如此，这个可以非常有用。你会学习一些常见用法，借此对它的能力有所认识。
+
+从所有提交中删除一个文件
+
+这个经常发生。有些人不经思考使用git add .，意外地提交了一个巨大的二进制文件，你想将它从所有地方删除。也许你不小心提交了一个包含密码的文件，而你想让你的项目开源。filter-branch大概会是你用来清理整个历史的工具。要从整个历史中删除一个名叫password.txt的文件，你可以在filter-branch上使用--tree-filter选项：
+
+$ git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)
+Ref 'refs/heads/master' was rewritten
+
+--tree-filter选项会在每次检出项目时先执行指定的命令然后重新提交结果。在这个例子中，你会在所有快照中删除一个名叫 password.txt 的文件，无论它是否存在。如果你想删除所有不小心提交上去的编辑器备份文件，你可以运行类似git filter-branch --tree-filter 'rm -f *~' HEAD的命令。
+
+你可以观察到 Git 重写目录树并且提交，然后将分支指针移到末尾。一个比较好的办法是在一个测试分支上做这些然后在你确定产物真的是你所要的之后，再 hard-reset 你的主分支。要在你所有的分支上运行filter-branch的话，你可以传递一个--all给命令。
