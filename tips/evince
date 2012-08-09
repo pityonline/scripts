@@ -1,0 +1,13 @@
+# Shotcuts
+
+j	move down 1 line
+k	move up 1 line
+n	move to next page
+p	move to previous page
+space	move down 1 screen
+shift+space	move up 1 screen
+
+ctrl++	zoom in
+ctrl+-	zoom out
+f	best fit
+w	fit page width
