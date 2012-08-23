@@ -1,7 +1,9 @@
 # Shotcuts
 
+h   move left
 j	move down 1 line
 k	move up 1 line
+l   move right
 n	move to next page
 p	move to previous page
 space	move down 1 screen
