@@ -1,0 +1,57 @@
+# Linux 中音频格式相互转换
+
+# 文字源于 http://www.linuxidc.com/Linux/2008-10/16212.htm
+
+MP3 相关工具: lame
+OGG 相关工具: vorbis-tools
+APE 相关工具: mac
+FLAC 相关工具: flac
+WAV 相关工具: shntool
+BIN/CUE镜像分割: bchunk
+
+# 1.MP3 和 WAV 之间相互转换
+
+mp3 -> wav
+lame --decode <输入_mp3文件> <输出_wav文件>
+wav -> mp3 
+lame -b <比特率> <输入_wav文件> <输出_ogg文件> 
+shntool conv -o "cust ext=mp3 lame -b <比特率> - %f" <输入_wav文件>
+
+# 2.OGG 和 WAV 之间相互转换
+
+ogg -> wav
+oggdec <输出_ogg文件> -o <输入_wav文件>
+wav -> ogg 
+oggenc -b <比特率> <输入_wav文件> -o <输出_ogg文件> 
+
+# 3.APE 和 WAV 之间相互转换
+
+ape -> wav 
+mac <输入_ape文件> <输出_wav文件> -d
+wav -> ape
+mac <输入_wav文件> <输出_ape文件> -c <压缩比率, 默认为 2000>
+
+# 4.FLAC 和 WAV 之间相互转换
+
+flac -> wav 
+flac -d <输入_flac文件> -o <输出_wav文件>
+wav -> flac 
+flac <输入_wav文件> <输出_flac文件> -<压缩比率 1-8 , 默认为 5>
+
+# 5.分割APE/CUE镜像 
+
+# i) 先解码成WAV格式 
+mac CDImage.ape CDImage.wav -d 
+再进行切割
+bchunk -w CDImage.wav CDImage.cue output 
+或 
+shnsplit -f CDImage.cue CDImage.wav
+# ii) 也可以直接切割 
+shnsplit -f CDImage.cue -i ape 
+# iii) 切割并转换到其他格式(FLAC/mp3) 
+shnsplit -f CDImage.cue -i ape -o flac CDImage.ape 
+shnsplit -f CDImage.cue -i ape -o "cust ext=mp3 lame -b 320 - %f" CDImage.ape 
+
+# 6.APE <-> FLAC 互相转换 
+shnconv -i ape -o flac CDImage.ape 
+shnconv -i flac -o ape CDImage.flac 
