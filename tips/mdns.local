@@ -1,7 +1,0 @@
-# 不清楚是否真的有用，好像以前测试过，没用。
-
-用以实现 mDNS "zeroconf" 标准的 avahi-daemon 软件包含了一个检查冲突的.local DNS 域的操作。我们接收到用户报告某些 ISP 在他们的网络上向用户推荐这些 .local 域，而它们会导致 Ubuntu 9.10 无法在本地网络中查看名称(327362)。 
-若要强制以此方式配置 mDNS，用户可运行以下命令： 
-
-sudo sed -i -e'/AVAHI_DAEMON_DETECT_LOCAL/s/1/0/' /etc/default/avahi-daemon
-sudo service avahi-daemon start
