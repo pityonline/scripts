@@ -1,0 +1,3 @@
+#!/bin/bash
+date="`date +%Y%m%d`"
+mysqldump --opt wordpress -u root -ppasswd --skip-lock-tables > /home/pity/Dropbox/sqls/wordpress$date.sql

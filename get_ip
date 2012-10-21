@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# 国内
+w3m -no-cookie -dump http://members.3322.org/dyndns/getip
+
+# 国外
+curl ifconfig.me
