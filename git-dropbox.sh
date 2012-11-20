@@ -30,10 +30,10 @@ else
 	fi
 
 	cd $DropboxPath
-	if [ ! -d ${DropboxPath}/Repo ]; then
-		mkdir Repo
+	if [ ! -d ${DropboxPath}/git ]; then
+		mkdir git
 	fi
-	cd Repo
+	cd git
 	mkdir ${ProjectName}.git
 	cd ${ProjectName}.git
 
@@ -42,7 +42,7 @@ else
     # Link the project to the origin
     echo "    Copying local $ProjectName to Dropbox..."
     cd $ProjectPath
-    git remote add origin ${DropboxPath}/Repo/${ProjectName}.git
+    git remote add origin ${DropboxPath}/git/${ProjectName}.git
     git push -q origin master
     #git branch --set-upstream master origin/master
 fi
