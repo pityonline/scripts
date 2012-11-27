@@ -1,8 +1,0 @@
-### 2011-3-19 ###
-
-dpkg -l | grep ^rc | awk '{print $2}' | sudo xargs dpkg -P
-
-用 dpkg -l 查看已安装的软件列表；
-用 grep ^rc 查看以 rc 开始的行，这种行表示是某些软件的残余配置；
-用 awk '{print $2}' 显示前面输出的第二列；
-将结果传递给 xargs 再执行 dpkg -P 清除残余配置。

@@ -1,4 +1,0 @@
-# 使用 SSL 连接 freenode 后 irssi 状态栏显示为 +Zi。
-port = "70"
-ssl = "yes"
-ssl_verify = "yes"
